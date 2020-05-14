@@ -91,6 +91,7 @@ public class SearchW extends JFrame {
 		btnBack1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MenuW menu = new MenuW();
+				menu.setBook(book);
 				menu.setVisible(true);
 				SearchW.this.dispose();
 			}

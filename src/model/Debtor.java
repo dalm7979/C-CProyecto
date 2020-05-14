@@ -75,6 +75,10 @@ public class Debtor {
 	
 	public ArrayList<Credit> showCredits(){
 		return credits;
+	}
+	
+	public void setCredits(ArrayList<Credit> c){
+		credits = c;
 	}	
 
 	public void newCredit(Term t,CreditType cdType, double v) {

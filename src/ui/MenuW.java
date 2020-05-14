@@ -143,6 +143,7 @@ public class MenuW extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ReceivablesW r = new ReceivablesW();
+				r.setBook(book);
 				r.setVisible(true);
 				MenuW.this.dispose();
 			}

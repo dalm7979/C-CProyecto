@@ -43,6 +43,20 @@ public class Main2 {
 		 int id22 = 0;
 		System.out.println("esss" + id22);
 		
+		ArrayList<Debtor> debtors = book.showDebtors();
+		
+		for(int i=0; i<debtors.size(); i++) {
+			String index = "Deudores: ";
+			Debtor d = debtors.get(i);
+			String name = d.getName() + " " + d.getLastName();
+			int nCredits = debtors.size();
+			
+
+			index = index + " Nombre: " + name + " | N° creditos: " + nCredits;
+			
+		    //listModel.add(i, index);
+		}
+		
 	}
 
 }

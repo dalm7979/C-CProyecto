@@ -12,6 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,6 +24,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import model.AccountsPayable;
 import model.Credit;
@@ -37,8 +40,9 @@ public class DebtorFound extends JFrame {
 	private static AccountsPayable book;
 	private JPanel contentPane;
 	private JTextField textNewCreditValue;
-	private JTextField textField;
+	private JTextField textField_addPayment;
 	ArrayList<Credit> credits;
+	private JTextField textField_BillNumber;
 
 	/**
 	 * Launch the application.
@@ -63,7 +67,7 @@ public class DebtorFound extends JFrame {
 	 */
 	public DebtorFound(AccountsPayable b, int id, int billID) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 629, 546);
+		setBounds(100, 100, 629, 635);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,14 +82,14 @@ public class DebtorFound extends JFrame {
 		JLabel lblDebtorName = new JLabel(debtor1.getName() + " " + debtor1.getLastName());
 		lblDebtorName.setFont(new Font("Arial Narrow", Font.ITALIC, 18));
 		
-		JButton btnAddPayment = new JButton("mostrar creditos actuales");
+		JButton btnShowCredits = new JButton("mostrar creditos actuales");
 		
 		JList list = new JList();
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		DefaultListModel listModel = new DefaultListModel();
 		
-		JButton btnAdd = new JButton("Agregar Abono");
+		JButton btnAddPayment = new JButton("Agregar Abono");
 		
 		
 		
@@ -138,14 +142,14 @@ public class DebtorFound extends JFrame {
 		JLabel lblAbonarAUn = new JLabel("Abonar a un Credito");
 		lblAbonarAUn.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		textField_addPayment = new JTextField();
+		textField_addPayment.setColumns(10);
 		
-		JLabel lblDebt_1 = new JLabel("Valor de deuda");
+		JLabel lblDebt_1 = new JLabel("Cantidad a Abonar");
 		lblDebt_1.setForeground(Color.BLACK);
 		lblDebt_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel = new JLabel("Seleccion el credito al cual hacer el abono");
+		JLabel lblNewLabel = new JLabel("N\u00B0 factura");
 		
 		JButton btnBack1 = new JButton("Atras");
 		btnBack1.setOpaque(false);
@@ -153,42 +157,34 @@ public class DebtorFound extends JFrame {
 		btnBack1.setBorder(null);
 		btnBack1.setBackground(Color.LIGHT_GRAY);
 		
+		textField_BillNumber = new JTextField();
+		textField_BillNumber.setColumns(10);
+		
+		JLabel lblCredits = new JLabel("Creditos");
+		lblCredits.setForeground(Color.BLACK);
+		lblCredits.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(241)
-					.addComponent(btnAdd)
-					.addContainerGap(257, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(list, GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(btnAddPayment, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblDebt_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-									.addGap(66)
-									.addComponent(lblNewLabel)))
-							.addPreferredGap(ComponentPlacement.RELATED, 190, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblAbonarAUn, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(btnNewCredit, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, 4, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblTerm, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 339, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textField_addPayment, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(textField_BillNumber, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnAddPayment))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblDebt_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+							.addGap(66)
+							.addComponent(lblNewLabel)))
+					.addGap(225))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblTerm, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(rdbtn_1Period, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -197,16 +193,15 @@ public class DebtorFound extends JFrame {
 							.addComponent(rdbtn_3Periods, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(rdbtn_MoreThan3Periods, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(125, Short.MAX_VALUE))
+					.addContainerGap(242, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblDebt, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textNewCreditValue, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+							.addGap(44)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblCredit, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
@@ -217,11 +212,9 @@ public class DebtorFound extends JFrame {
 											.addGap(137)
 											.addComponent(rdbtn_Credit, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 										.addComponent(rdbtn_PromissoryNotes, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewCredit)
-							.addPreferredGap(ComponentPlacement.RELATED, 341, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblNewCredit))
 					.addGap(40))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lbl_Age, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
@@ -230,19 +223,35 @@ public class DebtorFound extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lbl_Adress, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lbl_Company, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+					.addGap(82)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lbl_Salary, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lbl_Phone, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(lbl_Phone, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+					.addGap(130))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(btnBack1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(533, Short.MAX_VALUE))
+					.addContainerGap(654, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblDebtorName, GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+					.addComponent(lblDebtorName, GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
 					.addContainerGap())
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnNewCredit, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(580, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblAbonarAUn, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(498, Short.MAX_VALUE))
+				.addComponent(list, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(lblCredits, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(192)
+					.addComponent(btnShowCredits, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(320, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -253,22 +262,22 @@ public class DebtorFound extends JFrame {
 					.addGap(17)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lbl_IDNumber)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lbl_Age))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lbl_IDNumber)
+								.addComponent(lbl_Adress)
 								.addComponent(lbl_Phone))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lbl_Age)
-								.addComponent(lbl_Salary)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lbl_Adress)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lbl_Company)))
+								.addComponent(lbl_Company)
+								.addComponent(lbl_Salary))))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblNewCredit)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNewCredit)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblDebt)
 							.addGap(2)
 							.addComponent(textNewCreditValue, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
@@ -293,23 +302,27 @@ public class DebtorFound extends JFrame {
 					.addComponent(btnNewCredit)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblAbonarAUn, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(11)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDebt_1, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnAddPayment, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textField_addPayment, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_BillNumber, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAddPayment))
+					.addGap(22)
+					.addComponent(lblCredits, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(list, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnAdd))
+					.addComponent(btnShowCredits)
+					.addContainerGap(45, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		
 		//----------------------Boton abono-----------------
-		btnAddPayment.addMouseListener(new MouseAdapter() {
+		btnShowCredits.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				listModel.removeAllElements();
@@ -373,10 +386,30 @@ public class DebtorFound extends JFrame {
 			}
 		});
 		
+		btnAddPayment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idBill = Integer.parseInt(textField_BillNumber.getText());
+				double v= Double.parseDouble(textField_addPayment.getText());
+				
+				for(int i=0; i<credits.size(); i++) {
+					Credit c = credits.get(i);
+					if(idBill == c.getId()) {
+						c.setValue(v);
+						debtor1.setCredits(credits);
+					}			
+
+				}
+			}
+		});
+		
 		btnBack1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuW menu = new MenuW();
-				menu.setVisible(true);
+				
+				
+				
+				SearchW searchW = new SearchW();
+				searchW.setBook(book);
+				searchW.setVisible(true);
 				DebtorFound.this.dispose();
 			}
 		});

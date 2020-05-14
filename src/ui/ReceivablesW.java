@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 import javax.swing.border.MatteBorder;
+
+import model.AccountsPayable;
+import model.Credit;
+import model.Debtor;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -15,8 +20,18 @@ import javax.swing.JButton;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JList;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.LineBorder;
 
 public class ReceivablesW extends JFrame {
+	AccountsPayable book;
+	ArrayList<Debtor> debtors;
 
 	private JPanel contentPane;
 
@@ -48,20 +63,36 @@ public class ReceivablesW extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
-		JTextPane textPane_Results = new JTextPane();
-		textPane_Results.setSelectionColor(Color.CYAN);
-		textPane_Results.setEditable(false);
-		textPane_Results.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		textPane_Results.setBounds(10, 74, 414, 176);
-		contentPane.add(textPane_Results);
+		debtors = book.showDebtors();
+		
+		JList list = new JList();
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		DefaultListModel listModel = new DefaultListModel();
+		
+		System.out.println("hasta aqui entro");
+		
+		listModel.removeAllElements();
+		for(int i=0; i<debtors.size(); i++) {
+			String index = "Deudores: ";
+			Debtor d = debtors.get(i);
+			String name = d.getName() + " " + d.getLastName();
+			int nCredits = debtors.size();
+			
+
+			index = index + " Nombre: " + name + " | N° creditos: " + nCredits;
+			
+		    listModel.add(i, index);
+		}
+		
+		list.setModel(listModel);	
+		
+		
 		
 		JLabel lbl_listReceivables = new JLabel("Listado de Clientes por cobrar");
 		lbl_listReceivables.setForeground(Color.BLACK);
 		lbl_listReceivables.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lbl_listReceivables.setBounds(95, 36, 260, 20);
-		contentPane.add(lbl_listReceivables);
 		
 		JButton btnBack1 = new JButton("Atras");
 		btnBack1.addMouseListener(new MouseAdapter() {
@@ -77,8 +108,41 @@ public class ReceivablesW extends JFrame {
 		btnBack1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBack1.setBorder(null);
 		btnBack1.setBackground(Color.LIGHT_GRAY);
-		btnBack1.setBounds(10, 11, 60, 18);
-		contentPane.add(btnBack1);
-	}
+		
 
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(5)
+							.addComponent(btnBack1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(90)
+							.addComponent(lbl_listReceivables, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(list, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(6)
+					.addComponent(btnBack1, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addComponent(lbl_listReceivables, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(list, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(24, Short.MAX_VALUE))
+		);
+		contentPane.setLayout(gl_contentPane);
+	}
+	
+	public void setBook(AccountsPayable b) {
+		book = b;
+	}
+	
+	
 }

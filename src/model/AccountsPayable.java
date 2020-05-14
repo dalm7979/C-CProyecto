@@ -53,6 +53,10 @@ public class AccountsPayable {
 		return ref = i;
 	}
 	
+	public ArrayList<Debtor> showDebtors(){
+		return debtors;
+	}
+	
 	
 
 }
