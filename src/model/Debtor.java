@@ -80,7 +80,7 @@ public class Debtor {
 	public void newCredit(Term t,CreditType cdType, double v) {
 		ref+=10000;
 		Credit c= new Credit(t,cdType,v,ref);
-		credits.add(c);
+		credits.add(c);		
 	}
 	
 	public void payment(double v, int id) {
@@ -95,6 +95,10 @@ public class Debtor {
 	
 	public int getRef() {
 		return ref;
+	}
+	
+	public double getSalary() {
+		return salary;
 	}
 	
 	

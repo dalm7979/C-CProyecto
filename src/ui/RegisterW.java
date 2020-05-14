@@ -124,7 +124,7 @@ public class RegisterW extends JFrame {
 		textField_InitialDate.setBounds(473, 105, 174, 22);
 		contentPane.add(textField_InitialDate);
 		
-		lblID = new JLabel("Documento de identificacion");
+		lblID = new JLabel("Numero de identificacion");
 		lblID.setForeground(Color.BLACK);
 		lblID.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblID.setBounds(10, 192, 156, 14);
